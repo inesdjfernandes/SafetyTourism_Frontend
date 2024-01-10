@@ -1,5 +1,5 @@
 import { Component, EventEmitter , Output } from '@angular/core';
-import { Package } from '../package';
+import { Package } from '../models/package';
 import { FormBuilder , FormGroup , Validators } from '@angular/forms';
 import { PackageService } from '../package.service';
 import { DestinationsService } from '../destinations.service';

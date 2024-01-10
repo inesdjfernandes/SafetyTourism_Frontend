@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Package } from '../package';
+import { Package } from '../models/package';
 import { PackageService } from '../package.service';
+
+
 
 @Component({
   selector: 'app-package-details',
@@ -9,18 +11,21 @@ import { PackageService } from '../package.service';
   styleUrls: ['./package-details.component.css']
 })
 export class PackageDetailsComponent {
+  editingMode: boolean = false;
+  package: Package | null = null;;
+  @Input() packages: Package[] = [];
   @Input() selectedPackage?: Package | null = null;
   @Output() editClicked = new EventEmitter<void>();
   @Output() deleteClicked = new EventEmitter<void>();
-  editingMode: boolean = false;
+
 
   constructor(
     private router: Router,
     private packageService: PackageService,
     private route: ActivatedRoute
     ) {}
-    
-  ngOnInit(): void {
+
+    ngOnInit(): void {
       this.route.paramMap.subscribe(params => {
         const packageCity = params.get('city');
         console.log('Received city parameter:', packageCity);
@@ -29,12 +34,8 @@ export class PackageDetailsComponent {
             .subscribe(
               (data: Package[]) => {
                 console.log('Received package data from backend:', data);
-                if (data.length > 0) {
-                  this.selectedPackage = data[0];
-                  console.log("Package selecionado", this.selectedPackage);
-                } else {
-                  console.error('Package data is empty.');
-                }
+                this.packages = data;
+                console.log("Packages selecionados", this.packages);
               },
               error => {
                 console.error('Error fetching package details:', error);
@@ -42,27 +43,25 @@ export class PackageDetailsComponent {
             );
         }
       });
+    } 
+    
+    onEdit(selectedPackage: Package): void {
+      this.editingMode = true;
+      this.selectedPackage = selectedPackage;
     }
     
-    
-onEdit(): void {
-    this.editingMode = true;
-  }
-
-onDelete(): void {
-  if (this.selectedPackage) {
-    const confirmDelete = window.confirm('Tem certeza que deseja excluir este pacote?');
-    
-    if (confirmDelete) {
-      this.packageService.deletePackage(this.selectedPackage).subscribe(
-        () => {
-          console.log('Pacote excluído com sucesso.');
-          this.router.navigate(['/packages']); // Redirecionar para a lista de pacotes após a exclusão
-        },
-        (error) => {
-          console.error('Erro ao excluir o pacote:', error);
-        });
+    onDelete(selectedPackage: Package): void {
+      const confirmDelete = window.confirm('Tem certeza que deseja excluir este pacote?');
+      
+      if (confirmDelete) {
+        this.packageService.deletePackage(selectedPackage).subscribe(
+          () => {
+            console.log('Pacote excluído com sucesso.');
+            this.router.navigate(['/packages']);
+          },
+          (error) => {
+            console.error('Erro ao excluir o pacote:', error);
+         });
       }
     }
-  }
 }
