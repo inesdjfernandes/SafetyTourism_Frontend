@@ -1,4 +1,4 @@
-<div *ngIf="!editingMode && selectedPackage">
+<!--<div *ngIf="!editingMode && selectedPackage">
     <h2>{{ selectedPackage.city }}</h2>
     <div><b>Descrição do Pacote:</b> {{ selectedPackage.pack_desc }}</div>
     <div><b>Preço do Pacote:</b> {{ selectedPackage.pack_price }}</div>
@@ -9,6 +9,20 @@
   </div>
   
   <app-package-edit-form *ngIf="editingMode && selectedPackage !== null" [package]="selectedPackage"></app-package-edit-form>
+-->
+
+<div *ngIf="!editingMode && packages && packages.length > 0">
+  <div *ngFor="let selectedPackage of packages">
+    <h2>{{ selectedPackage.city }}</h2>
+    <div><b>Descrição do Pacote:</b> {{ selectedPackage.pack_desc }}</div>
+    <div><b>Preço do Pacote:</b> {{ selectedPackage.pack_price }}</div>
+    <div><b>Tipo de Pacote:</b> {{ selectedPackage.pack_type }}</div>
+    <button (click)="onEdit(selectedPackage)">Editar Pacote</button>
+    <button (click)="onDelete(selectedPackage)">Eliminar Pacote</button>
+  </div>
+</div>
+
+
   
 
   

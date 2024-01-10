@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Package } from '../package';
+import { Package } from '../models/package';
 import { PackageService } from '../package.service';
 
 @Component({
