@@ -1,0 +1,16 @@
+<ul class="packages">
+    <li *ngFor="let pack of packages">
+        <button type="button" (click)="onSelect(pack)">
+            <span class="city">{{ pack.city }}</span>
+        </button>
+    </li>
+</ul>
+  
+<app-package-details
+  [selectedPackage]="selectedPackage"
+  (editClicked)="onPackageEdited(selectedPackage)"
+  (deleteClicked)="onPackageDelete()"
+></app-package-details>
+<app-package-edit-form *ngIf="editingMode && selectedPackage" [package]="selectedPackage"></app-package-edit-form>
+<app-package-delete-form *ngIf="editingMode && selectedPackage" [package]="selectedPackage"></app-package-delete-form>
+<app-package-form (packageCreated)="onPackageCreated($event)"></app-package-form>

@@ -1,0 +1,20 @@
+<div *ngIf="selectedDestination" class="destination-details">
+    <h2 class="cidade_titulo">{{ selectedDestination.city_name }}, {{selectedDestination.country_name}}</h2>
+    <p class="destination-description"><b>Descrição: </b>{{ selectedDestination.city_desc }}</p>
+    <p class="destination-info"><b>Informação adicional: </b>{{ selectedDestination.message}} </p>
+    <button (click)="onDestinationEdited(selectedDestination)">Editar Destino</button>
+    <button (click)="onDestinationDeleted(selectedDestination)">Eliminar Destino</button>
+
+    <app-destinations-edit-form
+    *ngIf="showEditForm"
+    [destination]="selectedDestination"
+    (destinationEdited)="onDestinationEdited($event)"></app-destinations-edit-form>
+
+    <div *ngIf="showDeleteConfirmation">
+        <p>Tem certeza que deseja eliminar {{ selectedDestination.city_name }}?</p>
+        <button (click)="onDestinationDeleted(selectedDestination)">Confirmar eliminação</button>
+        <button (click)="toggleDeleteConfirmation()">Cancelar</button>
+      </div>
+      <button (click)="redirectToPackages(selectedDestination.city_name)">Ver pacotes disponíveis para {{ selectedDestination.city_name }}</button>
+  </div>
+  

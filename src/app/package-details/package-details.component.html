@@ -1,0 +1,15 @@
+<div *ngIf="!editingMode && selectedPackage">
+    <h2>{{ selectedPackage.city }}</h2>
+    <div><b>Descrição do Pacote:</b> {{ selectedPackage.pack_desc }}</div>
+    <div><b>Preço do Pacote:</b> {{ selectedPackage.pack_price }}</div>
+    <div><b>Tipo de Pacote:</b> {{ selectedPackage.pack_type }}</div>
+  
+    <button (click)="onEdit()">Editar Pacote</button>
+    <button (click)="onDelete()">Eliminar Pacote</button>
+  </div>
+  
+  <app-package-edit-form *ngIf="editingMode && selectedPackage !== null" [package]="selectedPackage"></app-package-edit-form>
+  
+
+  
+  

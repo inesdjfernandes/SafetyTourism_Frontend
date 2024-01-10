@@ -1,0 +1,16 @@
+<form [formGroup]="destinationEditForm" (ngSubmit)="onSave()">
+    <div>
+      <label for="city_name">Edite o nome do destino:</label>
+      <input type="text" id="city_name" formControlName="city_name" />
+    </div>
+    <div>
+      <label for="city_desc">Edite a descrição do destino:</label>
+      <input type="text" id="city_desc" formControlName="city_desc" />
+    </div>
+    <div>
+      <label for="country_name">Edite o nome do País de destino:</label>
+      <input type="text" id="country_name" formControlName="country_name" />
+    </div>
+    <button type="submit">Guardar</button>
+  </form>
+  
